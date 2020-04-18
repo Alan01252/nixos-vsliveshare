@@ -35,7 +35,10 @@ in ((vscode-utils.override { stdenv = gccStdenv; }).buildVscodeMarketplaceExtens
   mktplcRef = {
     name = "vsliveshare";
     publisher = "ms-vsliveshare";
-    inherit version sha256;
+    version = "1.0.2000";
+    sha256 = "1g5k94hizfdfcb1ipqr1wj07x41ynavy3ivbpr8c5vml9dkfzn48";
+  
+#    inherit version sha256;
   };
 }).overrideAttrs(attrs: {
   buildInputs = attrs.buildInputs ++ libs ++ [ autoPatchelfHook bash file makeWrapper ];
