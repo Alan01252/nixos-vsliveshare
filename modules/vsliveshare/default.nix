@@ -7,6 +7,7 @@ import ./module.nix ({ name, packages, description, serviceConfig }:
 
   systemd.user.services.${name} = {
     inherit description serviceConfig;
-    wantedBy = [ "graphical-session.target" ];
+#    wantedBy = [ "graphical-session.target" ];
+    wantedBy = [ "default.target" ];
   };
 })
