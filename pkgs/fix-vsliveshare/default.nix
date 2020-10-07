@@ -4,16 +4,8 @@
 writeShellScriptBin "fix-vsliveshare" ''
   PATH=${lib.makeBinPath [ coreutils findutils nix git file gnugrep jq ]}
 
-  if (( $# >= 1 )); then
-    version=$1
-  else
-    version=$(find "${extensionsDir}" -mindepth 1 -maxdepth 1 -name 'ms-vsliveshare.vsliveshare-[0-9]*' -printf '%f\n' | sort -rV | head -n1)
-  fi
-  version=''${version/ms-vsliveshare.vsliveshare-/}
-  if [[ ! $version =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-    echo "Invalid version '$version'." >&2
-    exit 1
-  fi
+  
+  version=1.0.2902
 
   nixpkgs=$(nix-build --no-out-link --expr '
     (import ${nixpkgs} { }).writeText "nixpkgs.nix" '"'''"'
@@ -37,7 +29,7 @@ writeShellScriptBin "fix-vsliveshare" ''
   }
 
   src=$(find $out -name ms-vsliveshare.vsliveshare)
-  dst="${extensionsDir}"/ms-vsliveshare.vsliveshare-$version
+  dst="${extensionsDir}"/ms-vsliveshare.vsliveshare
 
   # Remove all previous versions of VS Code Live Share.
   find "${extensionsDir}" -mindepth 1 -maxdepth 1 -name 'ms-vsliveshare.vsliveshare-[0-9]*' -exec rm -r {} +
